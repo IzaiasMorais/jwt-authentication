@@ -9,26 +9,20 @@ import { api } from "../services/apiClient";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
 export default function DashBoard() {
-  const { user } = useContext(AuthContext);
+  const { user, signOut, isAuthenticated } = useContext(AuthContext);
   const router = useRouter();
 
-  async function desconect() {
-    destroyCookie(undefined, "nextauth.token");
-    destroyCookie(undefined, "nextauth.refreshToken");
-    await router.push("/");
-  }
-
-  useEffect(() => {
-    api
-      .get("/me")
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
-  });
+  // useEffect(() => {
+  //   api
+  //     .get("/me")
+  //     .then((response) => console.log(response))
+  //     .catch((err) => console.log(err));
+  // });
 
   return (
     <>
       <h1>DashBoard: {user?.email}</h1>
-      <button onClick={() => desconect()}>Desconectar</button>
+      <button onClick={signOut}>Sign out</button>
       <br /> <br />
       <Can permissions={["metrics.list"]}>
         <div>Métricas</div>

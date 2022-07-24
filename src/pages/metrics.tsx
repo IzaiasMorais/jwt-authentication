@@ -9,12 +9,18 @@ export default function Metrics() {
   );
 }
 
-export const getServerSideProps = withSSRAuth(async (ctx) => {
-  // @ts-ignore
-  const apiClient = setupAPIClient(ctx);
-  const response = await apiClient.get("/me");
+export const getServerSideProps = withSSRAuth(
+  async (ctx) => {
+    // @ts-ignore
+    const apiClient = setupAPIClient(ctx);
+    const response = await apiClient.get("/me");
 
-  return {
-    props: {},
-  };
-});
+    return {
+      props: {},
+    };
+  },
+  {
+    permissions: ["metrics.list"],
+    roles: ["administrator"],
+  }
+);
